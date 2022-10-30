@@ -124,11 +124,7 @@ class ProductPriceViewSet(BaseListModelMixin, BaseCreateModelMixin, BaseViewSet)
         second_interval = deepcopy(interval)
         interval.end_date = new_start - timedelta(days=1)
         second_interval.start_date = new_end + timedelta(days=1)
+        second_interval.id = None
 
-        if second_interval.end_date != second_interval.start_date:
-            second_interval.id = None
-            create_intervals.append(second_interval)
-        if interval.end_date != second_interval.start_date:
-            update_intervals.append(interval)
-        else:
-            interval.delete()
+        create_intervals.append(second_interval)
+        update_intervals.append(interval)

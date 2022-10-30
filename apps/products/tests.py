@@ -104,3 +104,11 @@ class TestProducts(TestCase):
         start_time = time()
         self._check_price(product_id, '2022-01-01', start_date.strftime('%Y-%m-%d'), 20, i + 1)
         self.assertLess(time() - start_time, 1)
+
+    # test case when new interval is included in one of the old one
+    def test_stage_6(self):
+        product_id = self._add_product()
+        self._add_price(product_id, '2022-01-01', '2022-01-10', 10)
+        self._add_price(product_id, '2022-01-06', '2022-01-07', 20)
+
+        self._check_price(product_id, '2022-01-05', '2022-01-08', 15, 4)
